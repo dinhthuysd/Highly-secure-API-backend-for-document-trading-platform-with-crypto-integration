@@ -10,6 +10,9 @@ from typing import List
 import uuid
 from datetime import datetime, timezone
 
+# Import admin routes
+from routes.admin_auth import router as admin_auth_router
+from routes.admin_management import router as admin_management_router
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -20,7 +23,11 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 # Create the main app without a prefix
-app = FastAPI()
+app = FastAPI(
+    title="Trading Platform Admin API",
+    description="Admin panel API for trading platform",
+    version="1.0.0"
+)
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
